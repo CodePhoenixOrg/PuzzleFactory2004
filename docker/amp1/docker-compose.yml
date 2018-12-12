@@ -1,0 +1,21 @@
+version: "3.0"
+services:
+  amp:
+    build: ./amp
+    image: amp:latest
+    environment:
+     - MYSQL_ROOT_PASSWORD=demo
+    ports:
+     - "3307:3306"
+     - "8080:80"
+    volumes:
+     - my_data:/var/lib/mysql
+     - ../data/mysql:/data
+     - ../web:/var/www/html
+     - ../includes:/usr/local/lib/php/puzzle
+     - ./php.ini:/etc/php.ini
+     - ./apache2.conf:/etc/apache2/apache2.conf
+     - ../log/php_error.log:/var/log/php_error.log
+volumes:
+  my_data:
+

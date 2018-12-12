@@ -1,0 +1,134 @@
+    1  ls
+    2  cd 
+    3  ls
+    4  ls -la
+    5  du . -m
+    6  rm -f mysql-4.1.25.tar.gz 
+    7  ls
+    8  cd /data/
+    9  ls
+   10  exit
+   11  ls
+   12  cd /data/
+   13  ls
+   14  exit
+   15  cd 
+   16  ls
+   17  cd /
+   18  ls
+   19  cd /var/
+   20  ls
+   21  cd /data/
+   22  ls
+   23  cd sql/
+   24  ls
+   25  ls -l |cut -c51- |sort|cut -f1 -d'_'|sort -u
+   26  ls -l |cut -c40- |sort|cut -f1 -d'_'|sort -u
+   27  ls -l |cut -c45- |sort|cut -f1 -d'_'|sort -u
+   28  ls -l |cut -c46- |sort|cut -f1 -d'_'|sort -u
+   29  for i in $(ls -l |cut -c46- |sort|cut -f1 -d'_'|sort -u); do echo $i; done;
+   30  for i in $(ls -l |cut -c46- |sort|cut -f1 -d'_'|sort -u); do mysql -uroot -p -e "create database $i;"; done;
+   31  ls
+   32  cat mysql_d.sql 
+   33  ls
+   34  cat test_d.sql 
+   35  ls
+   36  rm -f test_*
+   37  ls
+   38  mv mysql_* ..
+   39  ls
+   40  mv anao_relations_d.sql anao-relations_d.sql 
+   41  mv anao_relations_s.sql anao-relations_s.sql 
+   42  ls
+   43  mv toshiba_relations_d.sql toshiba-relations_d.sql 
+   44  mv toshiba_relations_s.sql toshiba-relations_s.sql 
+   45  ls
+   46  ls -la
+   47  mysql -uroot -p -e "create database toshiba_relations"
+   48  mysql -uroot -p -e "create database anao_relations"
+   49  \q
+   50  ls
+   51  ls -l |cut -c46- |sort|cut -f1 -d'_'|sort -u
+   52  for i in $(ls -l |cut -c46- |sort|cut -f1 -d'_'|sort -u); do echo "use $i;source $i_s.sql"; done;
+   53  for i in $(ls -l |cut -c46- |sort|cut -f1 -d'_'|sort -u); do echo "use $i;source ${i}_s.sql"; done;
+   54  for i in $(ls -l |cut -c46- |sort|cut -f1 -d'_'|sort -u); do echo "use $i;source ./${i}_s.sql"; done;
+   55  for i in $(ls -l |cut -c46- |sort|cut -f1 -d'_'|sort -u); do mysql -uroot -p -e  "use $i;source ${i}_s.sql"; done;
+   56  for i in $(ls -l |cut -c46- |sort|cut -f1 -d'_'|sort -u); do mysql -uroot -p -e  "use $i;\. ${i}_s.sql"; done;
+   57  demo
+   58  for i in $(ls -l |cut -c46- |sort|cut -f1 -d'_'|sort -u); do mysql -uroot -p -e  "use $i;\. ${i}_s.sql"; done;ls
+   59  ls
+   60  for i in $(ls -l |cut -c46- |sort|cut -f1 -d'_'|sort -u); do echo "mysql -uroot -p -e  "use $i;\. ${i}_s.sql" >> db_s.sql; done;
+   61  for i in $(ls -l |cut -c46- |sort|cut -f1 -d'_'|sort -u); do echo "mysql -uroot -p -e  \"use $i;\. ${i}_s.sql\"" >> db_s.sql; done;
+   62  ls
+   63  mv db_s.sql db_s.sh
+   64  cat db_s.sh 
+   65  for i in $(ls -l |cut -c46- |sort|cut -f1 -d'_'|sort -u); do echo "mysql -uroot -p -e  \"create database $i;\"" >> db_c.sql; done;
+   66  for i in $(ls -l |cut -c46- |sort|cut -f1 -d'_'|sort -u); do echo "mysql -uroot -p -e  \"use $i;\. ${i}_d.sql\"" >> db_d.sql; done;
+   67  ls
+   68  mv db_c.sql db_c.sh
+   69  mv db_d.sql db_d.sh
+   70  ls
+   71  vim 
+   72  vim db_d.sh 
+   73  vim db_s.sh 
+   74  ls
+   75  sh ./db_d.sh 
+   76  ls
+   77  cat factory_d.sql |less
+   78  ls
+   79  file rp_d.sql 
+   80  for i in $(ls *.sql); do echo $i; done;
+   81  for i in $(ls *.sql); do echo $i; $enc=$(file $i); echo $enc ; done;
+   82  for i in $(ls *.sql); do echo $i; enc=$(file $i); echo $enc ; done;
+   83  file --help
+   84  for i in $(ls *.sql); do echo $i; enc=$(file --mime-encoding$i); echo $enc ; done;
+   85  for i in $(ls *.sql); do echo $i; enc=$(file --mime-encoding $i); echo $enc ; done;
+   86  for i in $(ls *.sql); do  enc=$(file --mime-encoding $i|cut -f2 -d':'); echo $enc ; done;
+   87  iconv
+   88  iconv --help
+   89  for i in $(ls *.sql); do  enc=$(file --mime-encoding $i|cut -f2 -d':'); iconv -f $enc -t UTF-8 $i ; done;
+   90  ls
+   91  mkdir utf-8
+   92  for i in $(ls *.sql); do  enc=$(file --mime-encoding $i|cut -f2 -d':'); iconv -f $enc -t UTF-8 > utf-8/$i ; done;
+   93  ls utf-8/
+   94  cat utf-8/anao-relations_d.sql 
+   95  for i in $(ls *.sql); do  enc=$(file --mime-encoding $i|cut -f2 -d':'); f="utf-8"$i; iconv -f $enc -t UTF-8 > $f ; done;
+   96  cat utf-8/anao-relations_d.sql 
+   97  cat utf-8/anao-relations_d.sql file --hel
+   98  cat utf-8/anao-relations_d.sql file --help
+   99  iconv --help
+  100  for i in $(ls *.sql); do  enc=$(file --mime-encoding $i|cut -f2 -d':'); f="utf-8"$i; iconv -f $enc -t UTF-8 -o $f ; done;
+  101  ls utf-8/
+  102  rm -rf utf-8
+  103  ls
+  104  cat utf-8anao-relations_d.sql 
+  105  rm utf-8anao-relations_d.sql 
+  106  ls
+  107  for i in $(ls *.sql); do  enc=$(file --mime-encoding $i|cut -f2 -d':'); f="utf-8"$i; iconv -f $enc -t UTF-8 ; done;
+  108  ls
+  109  file magasin_s.sql 
+  110  file magasin_s.sql --mime-encoding
+  111  for i in $(ls *.sql); do  enc=$(file --mime-encoding $i|cut -f2 -d':'); iconv -f $enc -t UTF-8 $i ; done;
+  112  mkdir utf-8
+  113  for i in $(ls *.sql); do  enc=$(file --mime-encoding $i|cut -f2 -d':'); f="utf-8/$i" iconv -f $enc -t UTF-8 $i -o $f; done;
+  114  cd utf-8
+  115  ls
+  116  for i in $(ls *.sql); do  enc=$(file --mime-encoding $i|cut -f2 -d':'); f="utf-8/$i"; iconv -f $enc -t UTF-8 $i -o $f; done;
+  117  ls
+  118  cd ..
+  119  for i in $(ls *.sql); do  enc=$(file --mime-encoding $i|cut -f2 -d':'); f="utf-8/$i"; iconv -f $enc -t UTF-8 $i -o $f; done;
+  120  ls utf-8
+  121  iconv -l
+  122  ls
+  123  cd utf-8
+  124  ls
+  125  rm -f utf-8anao-relations_d.sql 
+  126  ls
+  127  cp -rfv * ..
+  128  cd ..
+  129  ls
+  130  history 
+  131  ls
+  132  cd ..
+  133  ls
+  134  history > history 

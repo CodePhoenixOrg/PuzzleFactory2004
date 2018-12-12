@@ -1,0 +1,41 @@
+version: "3.0"
+services:
+  mysql:
+    build: ./mysql4
+    image: mysql4:latest
+    container_name: amp2_db
+    ports:
+     - "3307:3306"
+    restart: always
+    volumes:
+     - mysql_data:/db
+     - ../../data/mysql:/data
+    environment:
+     - MYSQL_ROOT_PASSWORD=demo
+     - MYSQL_HOST=localhost
+     - MYSQL_PORT=3306
+     - MYSQL_USER=david
+     - MYSQL_PASSWORD=demo
+     - MYSQL_DATABASE=mysql
+     - MYSQL_MY_DATABASE=factory
+
+  httpd:
+    build: ./apache2php4
+    image: apache2php4:latest
+    container_name: amp2_web
+    ports:
+     - "8080:80"
+    privileged: true
+    volumes:
+     - ../../web:/var/www
+     - ../../includes:/usr/local/lib/php/puzzle
+     - ./php.ini:/etc/php.ini
+     - ./apache2.conf:/etc/apache2/apache2.conf
+     - ./common.conf:/etc/apache2/sites-enabled/common.conf
+     #- ../../log/php_error.log:/var/log/php_error.log
+    links:
+     - mysql:mysql
+
+volumes:
+  mysql_data:
+
